@@ -34,7 +34,14 @@ function smarty_function_locale($params, &$smarty) {
 		$stack = array();
 	}
 
-	$path = $smarty->template_dir . $params['path'];
+    $locale = $params['locale'];
+    if( $locale )
+        setlocale(LC_MESSAGES, $locale);
+
+    $path = $params['path'];
+    if( !is_array($smarty->template_dir) ) #template_dir can also be array
+	    $path = $smarty->template_dir . $params['path'];
+	 
 	$domain = isset($params['domain']) ? $params['domain'] : 'messages';
 	$stack_operation = isset($params['stack']) ? $params['stack'] : 'push';
 
